@@ -73,7 +73,7 @@ I am these.<br />
 
 <div id="footer">
     <div class="container">
-    <p class="text-muted" style="text-align:center">&copy; Adam Griffin | <span id="contact" style="border-width:0px;" onclick="DecodeEmail();" tabindex="99">Contact Me</span></p>
+    <p class="text-muted" style="text-align:center">&copy; Adam Griffin | <span id="contact" onclick="DecodeEmail();" tabindex="99">Contact Me</span></p>
     </div>
 </div>
 
@@ -82,81 +82,81 @@ I am these.<br />
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- Script to stop email address bot harvesters. -->
 <script type="text/javascript">
-    // If you use this script, please comment the source back to www.adamgriffin.net. Thanks.
-    var elEmail = contact;
-    var email = "";
-    var emailCode = "97,100,97,109,46,100,46,103,114,105,102,102,105,110,64,103,109,97,105,108,46,99,111,109";
-    var emailAry = emailCode.split(",");
-    for (i = 0; i < emailAry.length; i++) {
-        email += "" + String.fromCharCode(emailAry[i]);
-    };
+// If you use this script, please comment the source back to www.adamgriffin.net. Thanks.
+var elEmail = contact;
+var email = "";
+var emailCode = "97,100,97,109,46,100,46,103,114,105,102,102,105,110,64,103,109,97,105,108,46,99,111,109";
+var emailAry = emailCode.split(",");
+for (i = 0; i < emailAry.length; i++) {
+    email += "" + String.fromCharCode(emailAry[i]);
+};
 
-    elEmail.onkeydown = function(event) {
-        //capture grave accent (`)
-        if (192 == event.keyCode) {
-            email = window.prompt("Enter the email address to be coded.");
-            if (email) {
-                emailCode = "";
-                for (i = 0; i < email.length; i++) {
-                    emailCode += email.charCodeAt(i) + ",";
-                };
-                window.alert(emailCode);
+elEmail.onkeydown = function(event) {
+    //capture grave accent (`)
+    if (192 == event.keyCode) {
+        email = window.prompt("Enter the email address to be coded.");
+        if (email) {
+            emailCode = "";
+            for (i = 0; i < email.length; i++) {
+                emailCode += email.charCodeAt(i) + ",";
             };
-        }; //else alert(event.keyCode);
-        return true;
-    };
-    //elEmail.focus();
+            window.alert(emailCode);
+        };
+    }; //else alert(event.keyCode);
+    return true;
+};
+//elEmail.focus();
 
-    var t;
-    var ts = 25;
-    function DecodeEmail() {
-        t = window.setInterval("StepFill();", ts);
-    };
+var t;
+var ts = 25;
+function DecodeEmail() {
+    t = window.setInterval("StepFill();", ts);
+};
 
-    var fill = "?";
-    var iStart = 0;
-    var iEnd = 0;
-    function StepFill() {
-        var curTxt = elEmail.innerHTML;
-        var newTxt = "";
-        if (0 == iStart) {
-            iEnd = emailAry.length;
-            newTxt = fill + curTxt.slice(iStart + 1, curTxt.length);
-        } else {
-            newTxt = curTxt.slice(0, iStart) + fill + curTxt.slice(iStart + 1, curTxt.length);
-        };
-        elEmail.innerHTML = newTxt;
-        iStart++;
-        if (iEnd == iStart) {
-            window.clearInterval(t);
-            if (elEmail.innerHTML.length > iEnd) elEmail.innerHTML = newTxt.slice(0, iEnd);
-            iStart = 0;
-            iEnd = 0;
-            t = window.setInterval("StepFillEmail();", ts);
-        };
+var fill = "?";
+var iStart = 0;
+var iEnd = 0;
+function StepFill() {
+    var curTxt = elEmail.innerHTML;
+    var newTxt = "";
+    if (0 == iStart) {
+        iEnd = emailAry.length;
+        newTxt = fill + curTxt.slice(iStart + 1, curTxt.length);
+    } else {
+        newTxt = curTxt.slice(0, iStart) + fill + curTxt.slice(iStart + 1, curTxt.length);
     };
-    function StepFillEmail() {
-        var curTxt = elEmail.innerHTML;
-        var newTxt = "";
-        if (0 == iStart) {
-            iEnd = emailAry.length;
-            newTxt = String.fromCharCode(emailAry[iStart]) + curTxt.slice(iStart + 1, curTxt.length);
-        } else {
-            newTxt = curTxt.slice(0, iStart) + String.fromCharCode(emailAry[iStart]) + curTxt.slice(iStart + 1, curTxt.length);
-        };
-        elEmail.innerHTML = newTxt;
-        iStart++;
-        if (iEnd == iStart) {
-            elEmail.innerHTML = "<a href=\"mailto:" + email + "\">" + email + "</a>";
-            window.clearInterval(t);
-            iStart = 0;
-            iEnd = 0;
-            elEmail.onclick = doNothing;
-        };
+    elEmail.innerHTML = newTxt;
+    iStart++;
+    if (iEnd == iStart) {
+        window.clearInterval(t);
+        if (elEmail.innerHTML.length > iEnd) elEmail.innerHTML = newTxt.slice(0, iEnd);
+        iStart = 0;
+        iEnd = 0;
+        t = window.setInterval("StepFillEmail();", ts);
     };
-    function doNothing() {
-        ;
+};
+function StepFillEmail() {
+    var curTxt = elEmail.innerHTML;
+    var newTxt = "";
+    if (0 == iStart) {
+        iEnd = emailAry.length;
+        newTxt = String.fromCharCode(emailAry[iStart]) + curTxt.slice(iStart + 1, curTxt.length);
+    } else {
+        newTxt = curTxt.slice(0, iStart) + String.fromCharCode(emailAry[iStart]) + curTxt.slice(iStart + 1, curTxt.length);
     };
+    elEmail.innerHTML = newTxt;
+    iStart++;
+    if (iEnd == iStart) {
+        elEmail.innerHTML = "<a href=\"mailto:" + email + "\">" + email + "</a>";
+        window.clearInterval(t);
+        iStart = 0;
+        iEnd = 0;
+        elEmail.onclick = doNothing;
+    };
+};
+function doNothing() {
+    ;
+};
 </script>
 <!-- Google Analytics -->
 <script type="text/javascript">
